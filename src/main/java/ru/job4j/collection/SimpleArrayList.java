@@ -14,7 +14,10 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.container = (T[]) new Object[capacity];
     }
 
-    public void arrayExpansion() {
+    private void arrayExpansion() {
+        if (container.length == 0) {
+            container = Arrays.copyOf(container, 10);
+        }
         container = Arrays.copyOf(container, container.length * 2);
     }
 
@@ -30,36 +33,27 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public T set(int index, T newValue) {
-        if (Objects.checkIndex(index, size) >= 0) {
-            T t = container[index];
-            container[index] = newValue;
-            return t;
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
+        T t = container[index];
+        container[index] = newValue;
+        return t;
     }
 
     @Override
     public T remove(int index) {
-        if (Objects.checkIndex(index, size) >= 0) {
-            T t = container[index];
-            System.arraycopy(container, index + 1, container, index, size - index - 1);
-            container[size - 1] = null;
-            size--;
-            modCount++;
-            return t;
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
+        T t = container[index];
+        System.arraycopy(container, index + 1, container, index, size - index - 1);
+        container[size - 1] = null;
+        size--;
+        modCount++;
+        return t;
     }
 
     @Override
     public T get(int index) {
-        if (Objects.checkIndex(index, size) >= 0) {
-            return container[index];
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
+        return container[index];
     }
 
     @Override
@@ -81,7 +75,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return iterSize < size && size != 0;
+                return iterSize < size;
             }
 
             @Override
