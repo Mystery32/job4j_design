@@ -36,6 +36,10 @@ public class ForwardLinked<T> implements Iterable<T> {
         return t;
     }
 
+    public boolean isEmpty() {
+        return head == null;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
