@@ -45,8 +45,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V v = null;
-        if (table[indexFor(key.hashCode())] != null) {
-            v = table[indexFor(key.hashCode())].value;
+        int i = indexFor(key.hashCode());
+        if (table[i] != null) {
+            v = table[i].value;
         }
         return v;
     }
@@ -54,8 +55,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
-        if (table[indexFor(key.hashCode())] != null) {
-            table[indexFor(key.hashCode())] = null;
+        int i = indexFor(key.hashCode());
+        if (table[i] != null) {
+            table[i] = null;
             count--;
             modCount++;
             rsl = true;
