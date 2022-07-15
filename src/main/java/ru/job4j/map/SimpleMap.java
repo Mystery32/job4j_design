@@ -1,6 +1,9 @@
 package ru.job4j.map;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SimpleMap<K, V> implements Map<K, V> {
 
@@ -33,12 +36,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash(hash) & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private void expand() {
         if ((float) count / table.length >= LOAD_FACTOR) {
-            table = Arrays.copyOf(table, table.length * 2);
+            MapEntry<K, V>[] expTable = new MapEntry[capacity * 2];
+            for (MapEntry<K, V> mapEntry : table) {
+                if (mapEntry != null) {
+                    expTable[indexFor(mapEntry.key.hashCode())] = mapEntry;
+                }
+            }
+            table = expTable;
         }
     }
 
