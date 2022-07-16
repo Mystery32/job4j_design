@@ -8,7 +8,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private static final float LOAD_FACTOR = 0.75f;
 
-    private int capacity = 8;
+    private int capacity = 16;
 
     private int count = 0;
 
@@ -20,7 +20,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean put(K key, V value) {
         boolean rsl = false;
         expand();
-        int i = indexFor(key.hashCode());
+        int i = indexFor(hash(key.hashCode()));
         if (table[i] == null) {
             table[i] = new MapEntry<>(key, value);
             rsl = true;
@@ -54,7 +54,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V v = null;
-        int i = indexFor(key.hashCode());
+        int i = indexFor(hash(key.hashCode()));
         if (table[i] != null) {
             v = table[i].value;
         }
@@ -64,7 +64,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
-        int i = indexFor(key.hashCode());
+        int i = indexFor(hash(key.hashCode()));
         if (table[i] != null) {
             table[i] = null;
             count--;
