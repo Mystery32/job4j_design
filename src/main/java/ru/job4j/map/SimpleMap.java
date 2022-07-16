@@ -1,6 +1,5 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -41,7 +40,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         if ((float) count / table.length >= LOAD_FACTOR) {
-            MapEntry<K, V>[] expTable = new MapEntry[capacity * 2];
+            capacity *= 2;
+            MapEntry<K, V>[] expTable = new MapEntry[capacity];
             for (MapEntry<K, V> mapEntry : table) {
                 if (mapEntry != null) {
                     expTable[indexFor(mapEntry.key.hashCode())] = mapEntry;
