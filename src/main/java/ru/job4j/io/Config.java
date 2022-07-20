@@ -15,12 +15,13 @@ public class Config {
     }
 
     public void load() {
-        List<String> list = new ArrayList<>();
+
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().forEach(list::add);
+            List<String> list = read.lines().toList();
             for (String s: list) {
-                if (s.contains("=")) {
-                    values.put(s.split("=")[0].trim(), s.split("=")[1].trim());
+                if (!s.startsWith("#")) {
+                    String[] str = s.split("=", 2);
+                    values.put(str[0], str[1]);
                 }
             }
         } catch (IOException e) {

@@ -27,5 +27,6 @@ public class ConfigTest {
         assertThat(config.value("hibernate.connection.driver_class"), is("org.postgresql.Driver"));
         assertThat(config.value("hibernate.connection.username"), is("postgres"));
         assertThat(config.value("hibernate.connection.password"), is("password"));
+        assertThat(config.value("hibernate.connection.name"), is("postgres=Roman"));
     }
 }
