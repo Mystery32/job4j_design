@@ -15,13 +15,13 @@ public class Config {
     }
 
     public void load() {
-
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            List<String> list = read.lines().toList();
-            for (String s: list) {
-                if (!s.startsWith("#")) {
+            for (String s: read.lines().toList()) {
+                if (!s.startsWith("#") && !s.isEmpty()) {
                     String[] str = s.split("=", 2);
-                    values.put(str[0], str[1]);
+                    if (str.length > 1 && !str[0].equals("") && !str[1].equals("")) {
+                        values.put(str[0], str[1]);
+                    }
                 }
             }
         } catch (IOException e) {
