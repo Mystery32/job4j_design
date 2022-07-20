@@ -9,14 +9,11 @@ public class Analizy {
         try (BufferedReader read = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             boolean active = true;
-            List<String> list = read.lines().toList();
-            for (String s : list) {
-                if (active && Integer.parseInt(s.split(" ")[0].trim()) == 400
-                        || Integer.parseInt(s.split(" ")[0].trim()) == 500) {
+            for (String s : read.lines().toList()) {
+                if (active && s.startsWith("400") || s.startsWith("500")) {
                     out.print(s.split(" ")[1].trim() + ";");
                     active = false;
-                } else if (!active && Integer.parseInt(s.split(" ")[0].trim()) == 200
-                        || Integer.parseInt(s.split(" ")[0].trim()) == 300) {
+                } else if (!active && s.startsWith("200") || s.startsWith("300")) {
                     out.print(s.split(" ")[1].trim() + ";" + System.lineSeparator());
                     active = true;
                 }
