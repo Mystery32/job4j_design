@@ -1,11 +1,10 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.List;
 
 public class Analizy {
 
-    public static void unavailable(String source, String target) {
+    public static void unavailable(File source, File target) {
         try (BufferedReader read = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             boolean active = true;
@@ -24,6 +23,6 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        unavailable("server.log", "unavailable.csv");
+//        unavailable("server.log", "unavailable.csv");
     }
 }
