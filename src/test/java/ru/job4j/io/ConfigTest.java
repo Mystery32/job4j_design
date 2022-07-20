@@ -30,4 +30,3 @@ public class ConfigTest {
         assertThat(config.value("hibernate.connection.name"), is("postgres=Roman"));
     }
 }
-
