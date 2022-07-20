@@ -19,9 +19,10 @@ public class Config {
             for (String s: read.lines().toList()) {
                 if (!s.startsWith("#") && !s.isEmpty()) {
                     String[] str = s.split("=", 2);
-                    if (str.length > 1 && !str[0].equals("") && !str[1].equals("")) {
-                        values.put(str[0], str[1]);
+                    if (str.length != 2 || str[0].isBlank() || str[1].isBlank()) {
+                        throw new IllegalArgumentException();
                     }
+                    values.put(str[0], str[1]);
                 }
             }
         } catch (IOException e) {
