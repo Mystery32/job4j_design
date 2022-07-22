@@ -11,10 +11,10 @@ import java.util.function.Predicate;
 public class Search {
 
     private static void validate(String[] args) {
-        File file = new File(args[0]);
         if (args.length != 2) {
             throw new ArrayIndexOutOfBoundsException("Invalid number of parameters entered. Enter two options.");
         }
+        File file = new File(args[0]);
         if (!file.isDirectory()) {
             throw new IllegalArgumentException("Invalid folder address entered. Enter the search folder address.");
         }
