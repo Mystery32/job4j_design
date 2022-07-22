@@ -14,19 +14,17 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty tempFile = new FileProperty(file.toFile().length(), file.toFile().getName());
-        if (allFiles.containsKey(tempFile)) {
-            allFiles.get(tempFile).add(file);
-        } else {
-            allFiles.put(tempFile, new ArrayList<>());
-        }
+        allFiles.putIfAbsent(tempFile, new ArrayList<>());
+        allFiles.get(tempFile).add(file);
         return super.visitFile(file, attrs);
     }
 
     public void getDuplicate() {
-        for (Map.Entry<FileProperty, List<Path>> entry: allFiles.entrySet()) {
-            List<Path> paths = entry.getValue();
-            for (Path p: paths) {
-                System.out.println(p.toAbsolutePath());
+        for (FileProperty fp: allFiles.keySet()) {
+            if (allFiles.get(fp).size() > 1) {
+                for (Path p: allFiles.get(fp)) {
+                    System.out.println(p.toAbsolutePath());
+                }
             }
         }
     }
