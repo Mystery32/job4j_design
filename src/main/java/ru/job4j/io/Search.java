@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -9,13 +10,22 @@ import java.util.function.Predicate;
 
 public class Search {
 
+    private static void validate(String[] args) {
+        File file = new File(args[0]);
+        if (args.length != 2) {
+            throw new ArrayIndexOutOfBoundsException("Invalid number of parameters entered. Enter two options.");
+        }
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("Invalid folder address entered. Enter the search folder address.");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("An invalid search parameter was entered. "
+                    + "Enter a search parameter starting with \".\" followed by the desired file extension.");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
-        }
-        if (args[1] == null) {
-            throw new NullPointerException("The search parameter is missing. Enter the desired search parameter.");
-        }
+        validate(args);
         Path start = Paths.get(args[0]);
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
