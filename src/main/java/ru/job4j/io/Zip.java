@@ -34,6 +34,9 @@ public class Zip {
     }
 
     private void validate(String[] args) {
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Invalid number of parameters entered. Enter 3 parameters!");
+        }
         boolean haveDirectory = false;
         boolean haveExtensionOfFile = false;
         boolean haveNameOfArchive = false;

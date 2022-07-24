@@ -38,8 +38,8 @@ public class Search {
 
     static class SearchFiles implements FileVisitor<Path> {
 
-        Predicate<Path> predicate;
-        List<Path> paths = new ArrayList<>();
+        private Predicate<Path> predicate;
+        private List<Path> paths = new ArrayList<>();
 
         public SearchFiles(Predicate<Path> predicate) {
             this.predicate = predicate;
