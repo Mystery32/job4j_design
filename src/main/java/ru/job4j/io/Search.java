@@ -57,7 +57,7 @@ public class Search {
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
             if (predicate.test(file)) {
-                paths.add(file);
+                paths.add(file.toAbsolutePath());
             }
             return FileVisitResult.CONTINUE;
         }
