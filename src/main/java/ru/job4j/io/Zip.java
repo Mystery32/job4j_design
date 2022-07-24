@@ -66,7 +66,7 @@ public class Zip {
         Zip zip = new Zip();
         zip.validate(args);
         ArgsName an = ArgsName.of(args);
-        List<Path> list = Search.search(Path.of(an.get("d")), fileExt -> !fileExt.endsWith(an.get("e")));
+        List<Path> list = Search.search(Path.of(an.get("d")), fileExt -> !fileExt.toString().endsWith(an.get("e")));
         zip.packFiles(list, new File(an.get("o")));
 
     }
