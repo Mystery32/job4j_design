@@ -2,7 +2,6 @@ package ru.job4j.io;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class ArgsName {
 
@@ -13,6 +12,10 @@ public class ArgsName {
             throw new IllegalArgumentException("The requested key is missing");
         }
         return values.get(key);
+    }
+
+    public int sizeMapOfNames() {
+        return values.size();
     }
 
     private void validate(String[] args) {
