@@ -33,39 +33,25 @@ public class Zip {
         }
     }
 
-    private void validate(String[] args) {
+    private void validate(String[] args, ArgsName argsName) {
         if (args.length != 3) {
             throw new IllegalArgumentException("Invalid number of parameters entered. Enter 3 parameters!");
         }
-        boolean haveDirectory = false;
-        boolean haveExtensionOfFile = false;
-        boolean haveNameOfArchive = false;
-        for (String s : args) {
-            if (s.contains("d=")) {
-                haveDirectory = true;
-            }
-            if (s.contains("e=")) {
-                haveExtensionOfFile = true;
-            }
-            if (s.contains("o=")) {
-                haveNameOfArchive = true;
-            }
+        if (!Path.of(argsName.get("d")).toFile().isDirectory()) {
+            throw new IllegalArgumentException("Incorrect folder for archiving!");
         }
-        if (!haveDirectory) {
-            throw new IllegalArgumentException("Backup folder not specified!");
+        if (!argsName.get("e").startsWith(".")) {
+            throw new IllegalArgumentException("Incorrectly specified extension of files that should be excluded during archiving!");
         }
-        if (!haveExtensionOfFile) {
-            throw  new IllegalArgumentException("The extension of the files to be excluded during archiving is not specified!");
-        }
-        if (!haveNameOfArchive) {
-            throw new IllegalArgumentException("The name of the new archive folder was not specified!");
+        if (!argsName.get("o").endsWith(".zip")) {
+            throw new IllegalArgumentException("Archive name is incorrect!");
         }
     }
 
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
-        zip.validate(args);
         ArgsName an = ArgsName.of(args);
+        zip.validate(args, an);
         List<Path> list = Search.search(Path.of(an.get("d")), fileExt -> !fileExt.toString().endsWith(an.get("e")));
         zip.packFiles(list, new File(an.get("o")));
 
