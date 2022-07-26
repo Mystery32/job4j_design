@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CSVReader {
 
@@ -16,21 +13,23 @@ public class CSVReader {
         Path path = Path.of(argsName.get("path"));
         String delimiter = argsName.get("delimiter");
         String outFile = argsName.get("out");
-        List<String> filter = Arrays.stream(argsName.get("filter").split(",")).toList();
-        validate(argsName.sizeMapOfNames(), path, delimiter, filter);
+        String[] filter = argsName.get("filter").split(",");
+        validate(argsName.sizeMapOfNames(), path, delimiter, outFile, filter);
 
-        List<Integer> indexFilterColumns = new ArrayList<>();
+        int[] indexFilterColumns = new int[filter.length];
         StringBuilder sb = new StringBuilder();
 
         try (var scanner = new Scanner(path)) {
             while (scanner.hasNext()) {
                 String[] data = scanner.nextLine().split(delimiter);
-                for (int i = 0; i < data.length; i++) {
-                    if (filter.contains(data[i])) {
-                        indexFilterColumns.add(i);
+                for (int i = 0; i < filter.length; i++) {
+                    for (int j = 0; j < data.length; j++) {
+                        if (filter[i].equals(data[j])) {
+                            indexFilterColumns[i] = j;
+                        }
                     }
                 }
-                for (int i : indexFilterColumns) {
+                for (int i: indexFilterColumns) {
                     sb.append(data[i]).append(delimiter);
                 }
                 sb.deleteCharAt(sb.length() - 1)
@@ -45,7 +44,7 @@ public class CSVReader {
         }
     }
 
-    private static void validate(int size, Path path, String delimiter, List<String> filter) {
+    private static void validate(int size, Path path, String delimiter, String outFile, String[] filter) {
         if (size != 4) {
             throw new ArrayIndexOutOfBoundsException("Invalid number of parameters entered. Enter four options!");
         }
@@ -56,8 +55,13 @@ public class CSVReader {
         if (!";".equals(delimiter)) {
             throw new IllegalArgumentException("The delimiter does not match the required format!");
         }
-        if (filter.size() == 0) {
+        if (filter.length == 0) {
             throw new IllegalArgumentException("Filtering parameters by columns of the source file are missing or incorrectly entered!");
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ArgsName argsName = ArgsName.of(args);
+        handle(argsName);
     }
 }
