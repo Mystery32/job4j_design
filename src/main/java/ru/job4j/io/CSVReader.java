@@ -39,6 +39,7 @@ public class CSVReader {
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(outFile))) {
             pw.print(sb);
+            System.out.println(sb);
         } catch (IOException e) {
             e.printStackTrace();
         }
