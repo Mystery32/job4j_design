@@ -38,8 +38,11 @@ public class CSVReader {
         }
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(outFile))) {
-            pw.print(sb);
-            System.out.println(sb);
+            if (outFile.equals("stdout")) {
+                System.out.println(sb);
+            } else {
+                pw.print(sb);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
