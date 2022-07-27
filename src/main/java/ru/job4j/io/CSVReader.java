@@ -14,7 +14,7 @@ public class CSVReader {
         String delimiter = argsName.get("delimiter");
         String outFile = argsName.get("out");
         String[] filter = argsName.get("filter").split(",");
-        validate(argsName.sizeMapOfNames(), path, delimiter, outFile, filter);
+        validate(argsName.sizeMapOfNames(), path, delimiter, filter);
 
         int[] indexFilterColumns = new int[filter.length];
         StringBuilder sb = new StringBuilder();
@@ -38,7 +38,7 @@ public class CSVReader {
         }
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(outFile))) {
-            if (outFile.equals("stdout")) {
+            if ("stdout".equals(outFile)) {
                 System.out.println(sb);
             } else {
                 pw.print(sb);
@@ -48,7 +48,7 @@ public class CSVReader {
         }
     }
 
-    private static void validate(int size, Path path, String delimiter, String outFile, String[] filter) {
+    private static void validate(int size, Path path, String delimiter, String[] filter) {
         if (size != 4) {
             throw new ArrayIndexOutOfBoundsException("Invalid number of parameters entered. Enter four options!");
         }
