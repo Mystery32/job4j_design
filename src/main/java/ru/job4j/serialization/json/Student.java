@@ -1,14 +1,25 @@
 package ru.job4j.serialization.json;
 
+import jakarta.xml.bind.annotation.*;
+
 import java.util.Arrays;
 
+@XmlRootElement(name = "student")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Student {
 
-    private final boolean expelled;
-    private final int age;
-    private final String name;
-    private final FavoriteLesson favoriteLesson;
-    private final String[] sections;
+    @XmlAttribute
+    private boolean expelled;
+    private int age;
+    private String name;
+    private FavoriteLesson favoriteLesson;
+    @XmlElementWrapper(name = "sections")
+    @XmlElement(name = "section")
+    private String[] sections;
+
+    public Student() {
+
+    }
 
     public Student(boolean expelled, int age, String name, FavoriteLesson favoriteLesson, String[] sections) {
         this.expelled = expelled;

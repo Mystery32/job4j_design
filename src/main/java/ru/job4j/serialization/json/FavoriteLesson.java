@@ -1,10 +1,18 @@
 package ru.job4j.serialization.json;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "favoriteLesson")
 public class FavoriteLesson {
 
-    private final String name;
+    @XmlAttribute
+    private String name;
+    private int grade;
 
-    private final int grade;
+    public FavoriteLesson() {
+
+    }
 
     public FavoriteLesson(String name, int grade) {
         this.name = name;

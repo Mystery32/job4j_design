@@ -1,32 +1,32 @@
 package ru.job4j.serialization.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+
+import java.io.StringReader;
+import java.io.StringWriter;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         final Student student = new Student(false, 19, "Иван",
                 new FavoriteLesson("Математика", 87), new String[]{"Бокс", "Туризм"});
 
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(student));
-
-        final String studentFromJson =
-                "{"
-                        + "\"expelled\":false,"
-                        + "\"age\":19,"
-                        + "\"name\":Иван,"
-                        + "\"favoriteLesson\":"
-                        + "{"
-                        + "\"name\":\"Математика\","
-                        + "\"grade\":\"87\""
-                        + "},"
-                        + "\"sections\":"
-                        + "[\"Бокс\",\"Туризм\"]"
-                        + "}";
-        final Student st = gson.fromJson(studentFromJson, Student.class);
-        System.out.println(st);
+        JAXBContext context = JAXBContext.newInstance(Student.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml;
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(student, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        }
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            Student result = (Student) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }
     }
 }
