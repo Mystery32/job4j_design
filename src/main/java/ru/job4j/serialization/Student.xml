@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<student expelled="false" age="19" name="Иван">
+    <favoriteLesson name="Математика" grade="87"/>
+    <sections>
+        <section>Бокс</section>
+        <section>Туризм</section>
+    </sections>
+</student>
