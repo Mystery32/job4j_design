@@ -20,7 +20,7 @@ public class Main {
                         + "\"name\":Иван,"
                         + "\"favoriteLesson\":"
                         + "{"
-                        + "\"name\":\"Математика\""
+                        + "\"name\":\"Математика\","
                         + "\"grade\":\"87\""
                         + "},"
                         + "\"sections\":"
