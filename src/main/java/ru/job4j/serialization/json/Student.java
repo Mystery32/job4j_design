@@ -1,6 +1,6 @@
 package ru.job4j.serialization.json;
 
-import jakarta.xml.bind.annotation.*;
+import javax.xml.bind.annotation.*;
 
 import java.util.Arrays;
 
