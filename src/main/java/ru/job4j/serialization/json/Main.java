@@ -1,32 +1,34 @@
 package ru.job4j.serialization.json;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        JSONObject jsonFavoriteLesson = new JSONObject("{\"name\":\"Физика\",\"grade\":\"92\"}");
+
+        List<String> list = new ArrayList<>();
+        list.add("Шахматы");
+        list.add("Бильярд");
+        JSONArray jsonSections = new JSONArray(list);
+
         final Student student = new Student(false, 19, "Иван",
                 new FavoriteLesson("Математика", 87), new String[]{"Бокс", "Туризм"});
 
-        JAXBContext context = JAXBContext.newInstance(Student.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml;
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(student, writer);
-            xml = writer.getBuffer().toString();
-            System.out.println(xml);
-        }
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(xml)) {
-            Student result = (Student) unmarshaller.unmarshal(reader);
-            System.out.println(result);
-        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("expelled", student.isExpelled());
+        jsonObject.put("age", student.getAge());
+        jsonObject.put("name", student.getName());
+        jsonObject.put("favoriteLesson", jsonFavoriteLesson);
+        jsonObject.put("sections", jsonSections);
+
+        System.out.println(jsonObject.toString());
+
+        System.out.println(new JSONObject(student).toString());
     }
 }

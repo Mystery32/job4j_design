@@ -41,4 +41,16 @@ public class Student {
                 +
                 '}';
     }
+
+    public boolean isExpelled() {
+        return expelled;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
