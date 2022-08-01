@@ -53,4 +53,12 @@ public class Student {
     public String getName() {
         return name;
     }
+
+    public FavoriteLesson getFavoriteLesson() {
+        return favoriteLesson;
+    }
+
+    public String[] getSections() {
+        return sections;
+    }
 }

@@ -30,4 +30,12 @@ public class FavoriteLesson {
                 + '\'' + ", grade="
                 + grade + '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
 }
