@@ -45,7 +45,12 @@ public class Searcher {
         if ("name".equals(typeSearch)) {
             paths = p -> p.toFile().getName().equals(paramOfSearch);
         } else if ("mask".equals(typeSearch)) {
-            paths = null;
+            String mask = paramOfSearch
+                    .replace("*", "\\w")
+                    .replace("?", "\\w");
+            paths = p -> Pattern.compile(mask)
+                    .matcher(p.toString())
+                    .find();
         } else if ("regex".equals(typeSearch)) {
             paths = p -> Pattern.compile(paramOfSearch)
                     .matcher(p.toString())
