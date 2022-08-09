@@ -16,22 +16,22 @@ create table devices_people(
 );
 
 insert into people(name) values ('Аня'), ('Ваня'), ('Боря');
-insert into devices(name, price) values ('Smartphone', 3800), ('Desktop', 6300), ('Notebook', 5250);
+insert into devices(name, price) values ('Smartphone', 23.4), ('Desktop', 74.6), ('Notebook', 57.2);
 insert into devices_people(device_id, people_id) values (1, 1), (1, 2), (1, 3);
 insert into devices_people(device_id, people_id) values (2, 1), (2, 2);
 insert into devices_people(device_id, people_id) values (3, 1), (3, 3);
 
 select avg(price) from devices;
 
-select p.name, avg(d.price) 
+select p.name, avg(dp.price) 
 from devices_people as dp 
 join people p 
 on dp.people_id= p.id 
 group by p.name;
 
-select p.name, avg(d.price) 
+select p.name, avg(dp.price) 
 from devices_people as dp 
 join people p 
 on dp.people_id= p.id 
 group by p.name;
-having avg(d.price) > 5000;
+having avg(dp.price) > 5000;
