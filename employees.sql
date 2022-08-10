@@ -38,8 +38,12 @@ on e.departments_id = d.id
 where e.name is null
 group by d.name;
 
-select * from employees e left join departments d on e.departments_id = d.id;
-select * from departments d right join employees e on d.id = e.departments_id;
+select e.id, e.name, d.name
+from employees e
+left join departments d
+on e.departments_id = d.id;
 
-select * from departments d left join employees e on d.id = e.departments_id;
-select * from employees e right join departments d on e.departments_id = d.id;
+select e.id, e.name, d.name
+from departments d
+right join employees e
+on d.id = e.departments_id;

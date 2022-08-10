@@ -10,4 +10,4 @@ values ('Иван', 'мужчина'), ('Федор', 'мужчина'), ('Ок�
 select t1.name, t1.gender, t2.name, t2.gender
 from teens as t1
 cross join teens as t2
-where t1.name != t2.name;
+where t1.gender != t2.gender;
