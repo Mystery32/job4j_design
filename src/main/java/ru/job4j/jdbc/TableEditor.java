@@ -20,7 +20,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
+        Class.forName(properties.getProperty("driver"));
         connection = DriverManager.getConnection(properties.getProperty("url"),
                 properties.getProperty("username"),
                 properties.getProperty("password"));
@@ -44,17 +44,17 @@ public class TableEditor implements AutoCloseable {
         initStatement(sql);
     }
 
-    public void addColumn(String tableName, String columnName, String type) throws Exception {
+    public void addColumn(String tableName, String columnName, String type) {
         String sql = String.format("alter table %s add column %s %s;", tableName, columnName, type);
         initStatement(sql);
     }
 
-    public void dropColumn(String tableName, String columnName) throws Exception {
+    public void dropColumn(String tableName, String columnName) {
         String sql = String.format("alter table %s drop column %s;", tableName, columnName);
         initStatement(sql);
     }
 
-    public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
+    public void renameColumn(String tableName, String columnName, String newColumnName) {
         String sql = String.format("alter table %s rename column %s to %s;", tableName, columnName, newColumnName);
         initStatement(sql);
     }
@@ -88,20 +88,19 @@ public class TableEditor implements AutoCloseable {
     public static void main(String[] args) throws Exception {
         Properties config = new Properties();
         try (InputStream in = TableEditor.class.getClassLoader()
-                .getResourceAsStream("./src/main/resources/table.properties")) {
+                .getResourceAsStream("table.properties")) {
             config.load(in);
         }
         try (TableEditor tableEditor = new TableEditor(config)) {
             tableEditor.createTable("my_table");
             tableEditor.addColumn("my_table", "Марка_авто", "text");
             tableEditor.addColumn("my_table", "Тип_двигателя", "text");
-            System.out.println(getTableScheme(tableEditor.connection, "test_table"));
+            System.out.println(getTableScheme(tableEditor.connection, "my_table"));
             tableEditor.dropColumn("my_table", "Марка_авто");
-            System.out.println(getTableScheme(tableEditor.connection, "test_table"));
+            System.out.println(getTableScheme(tableEditor.connection, "my_table"));
             tableEditor.renameColumn("my_table", "Тип_двигателя", "Двигатели");
-            System.out.println(getTableScheme(tableEditor.connection, "test_table"));
+            System.out.println(getTableScheme(tableEditor.connection, "my_table"));
             tableEditor.dropTable("my_table");
-            System.out.println(getTableScheme(tableEditor.connection, "test_table"));
         }
     }
 }
