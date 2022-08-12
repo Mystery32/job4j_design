@@ -11,7 +11,7 @@ public class ConnectionDemo {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
-        Config config = new Config("./data/app.properties");
+        Config config = new Config("C:\\projects\\job4j_design\\src\\main\\resources");
         config.load();
         try (Connection connection = DriverManager.getConnection(config.value("hibernate.connection.url"),
                 config.value("hibernate.connection.username"), config.value("hibernate.connection.password"))) {
