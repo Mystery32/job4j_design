@@ -47,9 +47,8 @@ select * from products;
 create or replace function tax_free()
     returns trigger as
 $$
-    BEGIN
-        update products
-        set price = price - price * 0.2;            
+    BEGIN        
+        NEW.price = price - price * 0.2;            
         return NEW;
     END;
 $$
@@ -68,7 +67,7 @@ create or replace function save_price()
 $$
     BEGIN
         insert into history_of_price (name, price, date)
-        values (products.name, products.price, now());            
+        values (NEW.name, NEW.price, now());            
         return NEW;
     END;
 $$
