@@ -28,9 +28,9 @@ $$
 	declare
         result integer;
     begin
+        select into result count(*) from products where id  > 1;
         delete from products where id > 1;
-		select into result count from products where id  > 1;
-		return result;
+        return result;
     end;
 $$;
 
