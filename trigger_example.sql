@@ -48,7 +48,7 @@ create or replace function tax_free()
     returns trigger as
 $$
     BEGIN        
-        NEW.price = price - price * 0.2;            
+        NEW.price = NEW.price - NEW.price * 0.2;            
         return NEW;
     END;
 $$
