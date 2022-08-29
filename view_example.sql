@@ -67,6 +67,7 @@ create view show_departments_with_3_or_more_womens
     	 join employees e on g.id = e.gender_id
     	 join department d on e.department_id = d.id
     	 join block b on d.block_id = b.id
-    	 group by (d.name, g.name) having count(g.name) >= 3 AND g.name = 'Женщина';
+	 where g.name = 'Женщина' 
+    	 group by (d.name, g.name) having count(g.name) >= 3;
 
 select * from show_departments_with_3_or_more_womens;
