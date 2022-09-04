@@ -29,8 +29,8 @@ SELECT p.company_id, c.name as Компания, count(p.company_id) as Коли
 from person p join company c on p.company_id = c.id
 group by p.company_id, c.name
 having count(*) = (
-    select p.company_id
-    group by p.company_id
-    order by p.company_id desc
+    select count(company_id) from person
+    group by company_id
+    order by count(company_id) desc
     limit 1
     );
