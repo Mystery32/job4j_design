@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Post {
 
-    private Integer id;
+    private int id;
 
     private String text;
 
@@ -16,11 +16,11 @@ public class Post {
         this.comments = comments;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
