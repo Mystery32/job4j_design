@@ -20,9 +20,9 @@ public class Emulator {
     private static final String TEXT_OF_FROM_FILE = "Укажите имя файла, из которого будут получены данные";
     private static final String TEXT_OF_IN_FILE = "Укажите имя кэш-файла";
     private static final String EXIT = "Конец работы";
-    private static DirFileCache dirFileCache;
+    private DirFileCache dirFileCache;
 
-    private static void start(Scanner scanner) throws IOException {
+    private void start(Scanner scanner) throws IOException {
         boolean run = true;
         while (run) {
             System.out.println(MENU);
@@ -52,6 +52,7 @@ public class Emulator {
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        start(scanner);
+        Emulator emulator = new Emulator();
+        emulator.start(scanner);
     }
 }
