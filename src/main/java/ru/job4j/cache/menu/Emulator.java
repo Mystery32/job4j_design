@@ -20,7 +20,7 @@ public class Emulator {
     private static final String TEXT_OF_FROM_FILE = "Укажите имя файла, из которого будут получены данные";
     private static final String TEXT_OF_IN_FILE = "Укажите имя кэш-файла";
     private static final String EXIT = "Конец работы";
-    private static String cachingDir;
+    private static DirFileCache dirFileCache;
 
     private static void start(Scanner scanner) throws IOException {
         boolean run = true;
@@ -31,19 +31,17 @@ public class Emulator {
             System.out.println(userChoice);
             if (FIRST == userChoice) {
                 System.out.println(TEXT_OF_DIR);
-                cachingDir = scanner.nextLine();
+                String cachingDir = scanner.nextLine();
+                dirFileCache = new DirFileCache(cachingDir);
             } else if (SECOND == userChoice) {
                 System.out.println(TEXT_OF_FROM_FILE);
                 String textFile = scanner.nextLine();
                 System.out.println(TEXT_OF_IN_FILE);
                 String cachingFile = scanner.nextLine();
-                DirFileCache dirFileCache = new DirFileCache(cachingDir);
                 dirFileCache.put(cachingFile, dirFileCache.get(textFile));
-                System.out.println(dirFileCache.get(textFile));
             } else if (THIRD == userChoice) {
                 System.out.println(TEXT_OF_IN_FILE);
                 String cachingFile = scanner.nextLine();
-                DirFileCache dirFileCache = new DirFileCache(cachingDir);
                 System.out.println(dirFileCache.get(cachingFile));
             } else {
                 run = false;

@@ -15,12 +15,11 @@ public abstract class AbstractCache<K, V> {
     }
 
     public V get(K key) throws IOException {
-        SoftReference<V> value = cache.getOrDefault(key, new SoftReference<>(null));
-        if (value != null) {
-            return value.get();
-        } else {
-            return load(key);
+        V value = cache.getOrDefault(key, new SoftReference<>(null)).get();
+        if (value == null) {
+            put(key, load(key));
         }
+        return value;
     }
 
     protected abstract V load(K key) throws IOException;
