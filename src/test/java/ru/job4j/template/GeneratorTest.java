@@ -13,6 +13,18 @@ import static org.junit.Assert.assertThrows;
 class GeneratorTest {
 
     @Test
+    public void whenValidTemplateKeys() {
+        String template = "I am a ${name}, Who are ${subject}?";
+        String s1 = template.substring(template.indexOf("{") + 1, template.indexOf("}"));
+        String s2 = template.substring(template.lastIndexOf("{") + 1, template.lastIndexOf("}"));
+        Map<String, String> args = new HashMap<>();
+        args.put("name", "Ivan");
+        args.put("subject", "you");
+        assertThat(args.containsKey(s1)).isTrue();
+        assertThat(args.containsKey(s2)).isTrue();
+    }
+
+    @Test
     public void whenInvalidTemplateKeys() {
         Generator generator = null;
         String template = "I am a ${name}, Who are ${subject}?";
