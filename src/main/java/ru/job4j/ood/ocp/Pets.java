@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Pets {
 
-    private static final int PAWS = 4;
+    protected final int paws = 4;
     private String name;
 
-    public String makeSound() {
-        return "Лаять";
+    public Sound makeSound() {
+        return new Sound();
     }
 
     private int numbersOfPets(List<Pets> pets) {
