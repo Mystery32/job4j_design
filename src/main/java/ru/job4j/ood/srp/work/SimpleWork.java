@@ -1,14 +1,12 @@
 package ru.job4j.ood.srp.work;
 
-public class SimpleWork implements Work {
+public class SimpleWork {
 
-    @Override
     public void makePresentation() {
-        System.out.println("Составить презентацию о планах компании");
+        System.out.println("Составить презентацию о планах компании в печатном виде");
     }
 
-    @Override
     public void makeReport() {
-        System.out.println("Предоставить отчет о проделанной работе");
+        System.out.println("Предоставить отчет о проделанной работе и отправить по почте");
     }
 }
