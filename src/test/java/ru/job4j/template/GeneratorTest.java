@@ -14,27 +14,23 @@ class GeneratorTest {
 
     @Test
     public void whenValidTemplateKeys() {
+        Generator generator = null;
         String template = "I am a ${name}, Who are ${subject}?";
-        String s1 = template.substring(template.indexOf("{") + 1, template.indexOf("}"));
-        String s2 = template.substring(template.lastIndexOf("{") + 1, template.lastIndexOf("}"));
         Map<String, String> args = new HashMap<>();
         args.put("name", "Ivan");
         args.put("subject", "you");
-        assertThat(args.containsKey(s1)).isTrue();
-        assertThat(args.containsKey(s2)).isTrue();
+        assertThat(generator.produce(template, args)).isEqualTo("I am a Ivan, Who are you?");
     }
 
     @Test
     public void whenInvalidTemplateKeys() {
         Generator generator = null;
         String template = "I am a ${name}, Who are ${subject}?";
-        String s1 = template.substring(template.indexOf("{") + 1, template.indexOf("}"));
-        String s2 = template.substring(template.lastIndexOf("{") + 1, template.lastIndexOf("}"));
         Map<String, String> args = new HashMap<>();
         args.put("names", "Ivan");
         args.put("subjects", "you");
-        assertThat(args.containsKey(s1)).isFalse();
-        assertThat(args.containsKey(s2)).isFalse();
+        assertThat(args.containsKey("name")).isFalse();
+        assertThat(args.containsKey("subject")).isFalse();
         assertThrows(IllegalArgumentException.class, () -> generator.produce(template, args));
     }
 
@@ -47,10 +43,8 @@ class GeneratorTest {
         args.put("subject", "you");
         args.put("id", "Stepan");
         args.put("value", "student");
-        String wrongKey1 = "id";
-        String wrongKey2 = "value";
-        assertThat(args.containsKey(wrongKey1)).isTrue();
-        assertThat(args.containsKey(wrongKey2)).isTrue();
+        assertThat(args.containsKey("id")).isTrue();
+        assertThat(args.containsKey("value")).isTrue();
         assertThrows(IllegalArgumentException.class, () -> generator.produce(template, args));
     }
 }
