@@ -1,9 +1,12 @@
 package ru.job4j.ood.lsp;
 
+import java.util.List;
+
 public class Human {
 
     protected int age;
     protected double money;
+    protected final int taxRate = 1000;
 
     public Human(int age) {
         this.age = age;
@@ -33,6 +36,17 @@ public class Human {
         }
         System.out.println("Руководить сотрудниками компании");
     }
+
+    public double luxuryTax(List<Car> cars) {
+        double tax = 0;
+        if (cars.size() > 2) {
+            tax = cars.size() * taxRate;
+        }
+        if (money > 10000) {
+            tax += money * 0.2;
+        }
+        return tax;
+    }
 }
 
 class President extends Human {
@@ -55,4 +69,16 @@ class President extends Human {
     public void buyBentley() {
         System.out.println("Купить Bentley");
     }
+
+    public double luxuryTax(List<Car> cars) {
+        double tax = 0;
+        if (cars.size() > 2) {
+            tax = cars.size() * taxRate;
+        }
+        return tax;
+    }
+}
+
+class Car {
+
 }
