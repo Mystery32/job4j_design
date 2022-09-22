@@ -1,4 +1,4 @@
-package ru.job4j.design.lsp;
+package ru.job4j.ood.lsp.storefood;
 
 import java.util.ArrayList;
 import java.util.List;
