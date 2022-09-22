@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 public class ReportEngine implements Report {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
-    public static final String SEPARATOR = System.lineSeparator();
+    public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
 
     private Store store;
 
@@ -17,8 +17,7 @@ public class ReportEngine implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append("Name; Hired; Fired; Salary;")
-                .append(SEPARATOR);
+        text.append(HEAD_TEXT);
         for (Employee employee : store.findBy(filter)) {
             text.append(employee.getName()).append(";")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")

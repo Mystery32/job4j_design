@@ -1,38 +1,35 @@
 package ru.job4j.design.srp;
 
-import java.text.SimpleDateFormat;
 import java.util.function.Predicate;
 
 public class ReportForIT implements Report {
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
-    public static final String SEPARATOR = System.lineSeparator();
-    private Store store;
+    public static final String HTML_TEXT_START = "<!DOCTYPE html>" + SEPARATOR + "<html lang=\"en\">" + SEPARATOR
+            + "<head>" + SEPARATOR + "<meta charset=\"UTF-8\">" + SEPARATOR + "<title>Report</title>"
+            + SEPARATOR + "</head>" + SEPARATOR + "<body>" + SEPARATOR + "Name; Hired; Fired; Salary;"
+            + SEPARATOR;
+    public static final String HTML_TEXT_END = "</body>" + SEPARATOR + "</html>";
 
-    public ReportForIT(Store store) {
+    private Store store;
+    private DateTimeFormatter date;
+
+    public ReportForIT(Store store, DateTimeFormatter date) {
         this.store = store;
+        this.date = date;
     }
 
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append("<!DOCTYPE html>")
-                .append("<html lang=\"en\">").append(System.lineSeparator())
-                .append("<head>").append(System.lineSeparator())
-                .append("<meta charset=\"UTF-8\">").append(System.lineSeparator())
-                .append("<title>Report</title>").append(System.lineSeparator())
-                .append("</head>").append(System.lineSeparator())
-                .append("<body>").append(System.lineSeparator())
-                .append("Name; Hired; Fired; Salary;").append(System.lineSeparator());
+        text.append(HTML_TEXT_START);
         for (Employee emp : store.findBy(filter)) {
             text.append(emp.getName()).append(";")
-                    .append(DATE_FORMAT.format(emp.getHired().getTime())).append(";")
-                    .append(DATE_FORMAT.format(emp.getFired().getTime())).append(";")
+                    .append(date.format(emp.getHired().getTime())).append(";")
+                    .append(date.format(emp.getFired().getTime())).append(";")
                     .append(emp.getSalary()).append(";")
                     .append(SEPARATOR);
         }
-        text.append("</body>").append(System.lineSeparator())
-                .append("</html>");
+        text.append(HTML_TEXT_END);
         return text.toString();
     }
 }
