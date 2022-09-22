@@ -12,8 +12,11 @@ public class ControlQuality {
 
     public void addToStore(Food food) {
         for (Store s: stores) {
-            s.add(food);
+            if (s.add(food)) {
+                break;
+            }
         }
+
     }
 }
 

@@ -2,7 +2,7 @@ package ru.job4j.ood.lsp.storefood;
 
 import java.util.Calendar;
 
-public class Food {
+public abstract class Food {
 
     protected String name;
     protected Calendar expiryDate;
