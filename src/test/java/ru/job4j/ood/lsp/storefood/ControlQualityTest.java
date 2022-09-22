@@ -60,8 +60,7 @@ class ControlQualityTest {
         ControlQuality cq = new ControlQuality(stores);
         cq.addToStore(chips);
         cq.addToStore(nuts);
-        assertThat(shop.getFoods().contains(chips)).isTrue();
-        assertThat(shop.getFoods().contains(nuts)).isTrue();
+        assertThat(shop.getFoods().containsAll(List.of(chips, nuts))).isTrue();
         assertThat(chips.price).isEqualTo(50);
         assertThat(nuts.price).isEqualTo(60);
     }
@@ -97,10 +96,8 @@ class ControlQualityTest {
         cq.addToStore(cake);
         cq.addToStore(chips);
         cq.addToStore(nuts);
-        assertThat(warehouse.getFoods().contains(meat)).isTrue();
-        assertThat(trash.getFoods().contains(cake)).isTrue();
-        assertThat(shop.getFoods().contains(chips)).isTrue();
-        assertThat(shop.getFoods().contains(nuts)).isTrue();
-
+        assertThat(warehouse.getFoods().containsAll(List.of(meat))).isTrue();
+        assertThat(trash.getFoods().containsAll(List.of(cake))).isTrue();
+        assertThat(shop.getFoods().containsAll(List.of(chips, nuts))).isTrue();
     }
 }

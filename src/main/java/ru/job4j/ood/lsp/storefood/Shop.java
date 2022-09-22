@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Shop implements Store {
 
-    private final List<Food> foodsInShop = new ArrayList<>();
     private static final int PERCENT_25 = 25;
     private static final int PERCENT_75 = 75;
     private static final int PERCENT_100 = 100;
+    private final List<Food> foodsInShop = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Trash implements Store {
 
-    private final List<Food> foodsInTrash = new ArrayList<>();
     private static final int PERCENT_100 = 100;
+    private final List<Food> foodsInTrash = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {

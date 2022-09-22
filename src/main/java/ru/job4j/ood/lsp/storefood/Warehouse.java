@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Warehouse implements Store {
 
-    private List<Food> foodsInWarehouse = new ArrayList<>();
     private static final int PERCENT_25 = 25;
+    private List<Food> foodsInWarehouse = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {
