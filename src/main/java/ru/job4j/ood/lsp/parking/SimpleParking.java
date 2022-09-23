@@ -5,19 +5,18 @@ import java.util.List;
 
 public class SimpleParking implements Parking {
 
-    private static final int PARKING_SIZE = 100;
-    private final List<Car> parkingCars = new ArrayList<>();
+    private final List<PassCar> passCars = new ArrayList<>();
+    private final List<Truck> trucks = new ArrayList<>();
+    private final int passCarPlaces;
+    private final int truckPlaces;
+
+    public SimpleParking(int passCarPlaces, int truckPlaces) {
+        this.passCarPlaces = passCarPlaces;
+        this.truckPlaces = truckPlaces;
+    }
 
     @Override
-    public void checkCanParking(List<Car> cars) {
-        int placesLeft = PARKING_SIZE;
-        for (Car car: cars) {
-            if (placesLeft >= car.size) {
-                parkingCars.add(car);
-                placesLeft -= car.size;
-            } else {
-                System.out.println("All parking spaces are occupied!");
-            }
-        }
+    public boolean add(Car car) {
+        return false;
     }
 }
