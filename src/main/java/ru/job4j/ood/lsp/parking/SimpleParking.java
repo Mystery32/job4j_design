@@ -5,18 +5,21 @@ import java.util.List;
 
 public class SimpleParking implements Parking {
 
-    private final List<PassCar> passCars = new ArrayList<>();
-    private final List<Truck> trucks = new ArrayList<>();
     private final int passCarPlaces;
     private final int truckPlaces;
+    private final List<PassCar> passCars;
+    private final List<PassCar> trucks;
 
     public SimpleParking(int passCarPlaces, int truckPlaces) {
         this.passCarPlaces = passCarPlaces;
         this.truckPlaces = truckPlaces;
+        passCars = new ArrayList<>(passCarPlaces);
+        trucks = new ArrayList<>(truckPlaces);
     }
 
     @Override
     public boolean add(Car car) {
-        return false;
+        boolean result = false;
+        return result;
     }
 }
