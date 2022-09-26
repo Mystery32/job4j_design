@@ -35,3 +35,4 @@ public class SimpleParking implements Parking {
         return result;
     }
 }
+

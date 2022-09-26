@@ -18,7 +18,7 @@ class ControlQualityTest {
         Calendar expiryDate = Calendar.getInstance();
         expiryDate.set(2022, Calendar.OCTOBER, 10);
         Calendar createDate = Calendar.getInstance();
-        createDate.set(2022, Calendar.SEPTEMBER, 18);
+        createDate.set(2022, Calendar.SEPTEMBER, 25);
         Food meat = new Meat("Стейк", expiryDate, createDate, 500.0, 30);
         ControlQuality cq = new ControlQuality(stores);
         cq.addToStore(meat);
@@ -74,7 +74,7 @@ class ControlQualityTest {
         Calendar expiryDateMeat = Calendar.getInstance();
         expiryDateMeat.set(2022, Calendar.OCTOBER, 10);
         Calendar createDateMeat = Calendar.getInstance();
-        createDateMeat.set(2022, Calendar.SEPTEMBER, 18);
+        createDateMeat.set(2022, Calendar.SEPTEMBER, 25);
         Food meat = new Meat("Стейк", expiryDateMeat, createDateMeat, 500.0, 30);
         Calendar expiryDateCake = Calendar.getInstance();
         expiryDateCake.set(2022, Calendar.SEPTEMBER, 20);
