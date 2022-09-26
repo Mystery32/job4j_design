@@ -16,9 +16,11 @@ class ControlQualityTest {
         Shop shop = new Shop();
         List<Store> stores = List.of(warehouse, trash, shop);
         Calendar expiryDate = Calendar.getInstance();
-        expiryDate.set(2022, Calendar.OCTOBER, 10);
+        expiryDate.set(expiryDate.get(Calendar.YEAR), expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) + 10);
         Calendar createDate = Calendar.getInstance();
-        createDate.set(2022, Calendar.SEPTEMBER, 25);
+        createDate.set(expiryDate.get(Calendar.YEAR), expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) - 2);
         Food meat = new Meat("Стейк", expiryDate, createDate, 500.0, 30);
         ControlQuality cq = new ControlQuality(stores);
         cq.addToStore(meat);
@@ -32,9 +34,11 @@ class ControlQualityTest {
         Shop shop = new Shop();
         List<Store> stores = List.of(warehouse, trash, shop);
         Calendar expiryDate = Calendar.getInstance();
-        expiryDate.set(2022, Calendar.SEPTEMBER, 20);
+        expiryDate.set(expiryDate.get(Calendar.YEAR), expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH));
         Calendar createDate = Calendar.getInstance();
-        createDate.set(2022, Calendar.SEPTEMBER, 7);
+        createDate.set(expiryDate.get(Calendar.YEAR), expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) - 25);
         Food cake = new Dessert("Пирожное", expiryDate, createDate, 100.0, 20);
         ControlQuality cq = new ControlQuality(stores);
         cq.addToStore(cake);
@@ -48,14 +52,18 @@ class ControlQualityTest {
         Shop shop = new Shop();
         List<Store> stores = List.of(warehouse, trash, shop);
         Calendar expiryDateChips = Calendar.getInstance();
-        expiryDateChips.set(2022, Calendar.NOVEMBER, 20);
+        expiryDateChips.set(expiryDateChips.get(Calendar.YEAR), expiryDateChips.get(Calendar.MONTH),
+                expiryDateChips.get(Calendar.DAY_OF_MONTH) + 10);
         Calendar createDateChips = Calendar.getInstance();
-        createDateChips.set(2022, Calendar.AUGUST, 7);
+        createDateChips.set(createDateChips.get(Calendar.YEAR), createDateChips.get(Calendar.MONTH),
+                createDateChips.get(Calendar.DAY_OF_MONTH) - 10);
         Food chips = new Snacks("Московская картошка", expiryDateChips, createDateChips, 50.0, 40);
         Calendar expiryDateNuts = Calendar.getInstance();
-        expiryDateNuts.set(2022, Calendar.OCTOBER, 1);
+        expiryDateNuts.set(expiryDateNuts.get(Calendar.YEAR), expiryDateNuts.get(Calendar.MONTH),
+                expiryDateNuts.get(Calendar.DAY_OF_MONTH) + 5);
         Calendar createDateNuts = Calendar.getInstance();
-        createDateNuts.set(2022, Calendar.AUGUST, 15);
+        createDateNuts.set(createDateNuts.get(Calendar.YEAR), createDateNuts.get(Calendar.MONTH),
+                createDateNuts.get(Calendar.DAY_OF_MONTH) - 20);
         Food nuts = new Snacks("Соленый арахис", expiryDateNuts, createDateNuts, 80.0, 25);
         ControlQuality cq = new ControlQuality(stores);
         cq.addToStore(chips);
@@ -72,24 +80,32 @@ class ControlQualityTest {
         Shop shop = new Shop();
         List<Store> stores = List.of(warehouse, trash, shop);
         Calendar expiryDateMeat = Calendar.getInstance();
-        expiryDateMeat.set(2022, Calendar.OCTOBER, 10);
+        expiryDateMeat.set(expiryDateMeat.get(Calendar.YEAR), expiryDateMeat.get(Calendar.MONTH),
+                expiryDateMeat.get(Calendar.DAY_OF_MONTH) + 10);
         Calendar createDateMeat = Calendar.getInstance();
-        createDateMeat.set(2022, Calendar.SEPTEMBER, 25);
+        createDateMeat.set(createDateMeat.get(Calendar.YEAR), createDateMeat.get(Calendar.MONTH),
+                createDateMeat.get(Calendar.DAY_OF_MONTH) - 2);
         Food meat = new Meat("Стейк", expiryDateMeat, createDateMeat, 500.0, 30);
         Calendar expiryDateCake = Calendar.getInstance();
-        expiryDateCake.set(2022, Calendar.SEPTEMBER, 20);
+        expiryDateCake.set(expiryDateCake.get(Calendar.YEAR), expiryDateCake.get(Calendar.MONTH),
+                expiryDateCake.get(Calendar.DAY_OF_MONTH));
         Calendar createDateCake = Calendar.getInstance();
-        createDateCake.set(2022, Calendar.SEPTEMBER, 7);
+        createDateCake.set(expiryDateCake.get(Calendar.YEAR), expiryDateCake.get(Calendar.MONTH),
+                expiryDateCake.get(Calendar.DAY_OF_MONTH) - 25);
         Food cake = new Dessert("Пирожное", expiryDateCake, createDateCake, 100.0, 20);
         Calendar expiryDateChips = Calendar.getInstance();
-        expiryDateChips.set(2022, Calendar.NOVEMBER, 20);
+        expiryDateChips.set(expiryDateChips.get(Calendar.YEAR), expiryDateChips.get(Calendar.MONTH),
+                expiryDateChips.get(Calendar.DAY_OF_MONTH) + 10);
         Calendar createDateChips = Calendar.getInstance();
-        createDateChips.set(2022, Calendar.AUGUST, 7);
+        createDateChips.set(createDateChips.get(Calendar.YEAR), createDateChips.get(Calendar.MONTH),
+                createDateChips.get(Calendar.DAY_OF_MONTH) - 10);
         Food chips = new Snacks("Московская картошка", expiryDateChips, createDateChips, 50.0, 40);
         Calendar expiryDateNuts = Calendar.getInstance();
-        expiryDateNuts.set(2022, Calendar.OCTOBER, 1);
+        expiryDateNuts.set(expiryDateNuts.get(Calendar.YEAR), expiryDateNuts.get(Calendar.MONTH),
+                expiryDateNuts.get(Calendar.DAY_OF_MONTH) + 5);
         Calendar createDateNuts = Calendar.getInstance();
-        createDateNuts.set(2022, Calendar.AUGUST, 15);
+        createDateNuts.set(createDateNuts.get(Calendar.YEAR), createDateNuts.get(Calendar.MONTH),
+                createDateNuts.get(Calendar.DAY_OF_MONTH) - 20);
         Food nuts = new Snacks("Соленый арахис", expiryDateNuts, createDateNuts, 80.0, 25);
         ControlQuality cq = new ControlQuality(stores);
         cq.addToStore(meat);

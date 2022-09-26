@@ -22,13 +22,13 @@ public class SimpleParking implements Parking {
     @Override
     public boolean add(Car car) {
         boolean result = false;
-        if (car.size <= CAR_SIZE && passCars.size() < passCarPlaces) {
+        if (car.getSize() <= CAR_SIZE && passCars.size() < passCarPlaces) {
             passCars.add(car);
             result = true;
-        } else if (car.size > CAR_SIZE && trucks.size() < truckPlaces) {
+        } else if (car.getSize() > CAR_SIZE && trucks.size() < truckPlaces) {
             trucks.add(car);
             result = true;
-        } else if (car.size <= passCarPlaces - passCars.size()) {
+        } else if (car.getSize() <= passCarPlaces - passCars.size()) {
             passCars.add(car);
             result = true;
         }
