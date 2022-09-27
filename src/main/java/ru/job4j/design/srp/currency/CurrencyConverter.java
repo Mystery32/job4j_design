@@ -1,6 +1,4 @@
-package ru.job4j.design.srp;
-
-import java.util.Currency;
+package ru.job4j.design.srp.currency;
 
 public interface CurrencyConverter {
 

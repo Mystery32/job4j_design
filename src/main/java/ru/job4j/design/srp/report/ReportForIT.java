@@ -1,4 +1,8 @@
-package ru.job4j.design.srp;
+package ru.job4j.design.srp.report;
+
+import ru.job4j.design.srp.Employee;
+import ru.job4j.design.srp.store.Store;
+import ru.job4j.design.srp.formatter.DateTimeFormatter;
 
 import java.util.function.Predicate;
 

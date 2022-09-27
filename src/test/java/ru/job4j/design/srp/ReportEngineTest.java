@@ -1,17 +1,23 @@
 package ru.job4j.design.srp;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.design.srp.currency.Currency;
+import ru.job4j.design.srp.currency.CurrencyConverter;
+import ru.job4j.design.srp.currency.InMemoryCurrencyConverter;
+import ru.job4j.design.srp.formatter.DateTimeFormatter;
+import ru.job4j.design.srp.formatter.SimpleDataTimeFormatter;
+import ru.job4j.design.srp.report.*;
+import ru.job4j.design.srp.store.MemStore;
 
 import java.util.Calendar;
 import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.*;
-import static ru.job4j.design.srp.ReportEngine.DATE_FORMAT;
+import static ru.job4j.design.srp.report.ReportEngine.DATE_FORMAT;
 
 class ReportEngineTest {
 
     public static final String SEPARATOR = System.lineSeparator();
-    public static final int DOUBLE_SALARY = 2;
     public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
     public static final String HTML_TEXT_START = "<!DOCTYPE html>" + SEPARATOR + "<html lang=\"en\">" + SEPARATOR
             + "<head>" + SEPARATOR + "<meta charset=\"UTF-8\">" + SEPARATOR + "<title>Report</title>"
@@ -42,7 +48,7 @@ class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        DateTimeFormatter date = new SimpleData();
+        DateTimeFormatter date = new SimpleDataTimeFormatter();
         Report engine = new ReportForIT(store, date);
         StringBuilder expect = new StringBuilder()
                 .append(HTML_TEXT_START)
@@ -60,14 +66,15 @@ class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        DateTimeFormatter date = new SimpleData();
-        Report engine = new ReportForAccounting(store, date);
+        DateTimeFormatter date = new SimpleDataTimeFormatter();
+        CurrencyConverter converter = new InMemoryCurrencyConverter();
+        Report engine = new ReportForAccounting(store, date, converter);
         StringBuilder expect = new StringBuilder()
                 .append(HEAD_TEXT)
                 .append(worker.getName()).append(";")
                 .append(date.format(worker.getHired().getTime())).append(";")
                 .append(date.format(worker.getFired().getTime())).append(";")
-                .append(worker.getSalary() * DOUBLE_SALARY).append(";");
+                .append(converter.convert(Currency.RUB, worker.getSalary(), Currency.USD)).append(";");
         assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 

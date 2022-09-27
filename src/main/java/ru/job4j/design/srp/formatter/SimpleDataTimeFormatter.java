@@ -1,9 +1,9 @@
-package ru.job4j.design.srp;
+package ru.job4j.design.srp.formatter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SimpleData implements DateTimeFormatter {
+public class SimpleDataTimeFormatter implements DateTimeFormatter {
 
     private static final String FORMAT = "dd:MM:yyyy HH:mm";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(FORMAT);
