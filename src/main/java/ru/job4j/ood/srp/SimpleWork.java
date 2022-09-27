@@ -1,4 +1,4 @@
-package ru.job4j.ood.srp.work;
+package ru.job4j.ood.srp;
 
 public class SimpleWork {
 
