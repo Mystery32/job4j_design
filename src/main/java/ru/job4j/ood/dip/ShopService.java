@@ -3,11 +3,10 @@ package ru.job4j.ood.dip;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopService implements Store {
+public class ShopService {
 
     private List<Products> store = new ArrayList<>();
 
-    @Override
     public void add(Products product) {
         if (product == null) {
             System.out.println("Get error with" + product);
