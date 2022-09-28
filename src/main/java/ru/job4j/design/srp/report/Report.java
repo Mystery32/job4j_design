@@ -11,3 +11,4 @@ public interface Report {
 
     String generate(Predicate<Employee> filter) throws JAXBException;
 }
+

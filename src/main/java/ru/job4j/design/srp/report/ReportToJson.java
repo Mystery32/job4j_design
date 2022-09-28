@@ -33,3 +33,4 @@ public class ReportToJson implements Report {
         return lib.toJson(text);
     }
 }
+

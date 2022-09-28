@@ -59,3 +59,4 @@ public class ReportToXml implements Report {
         System.out.println(engine.generate(em -> true));
     }
 }
+
