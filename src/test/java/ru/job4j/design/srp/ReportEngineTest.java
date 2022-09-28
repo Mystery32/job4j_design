@@ -31,7 +31,7 @@ class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new ReportEngine(store);
+        ReportEngine engine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()
                 .append(HEAD_TEXT)
                 .append(worker.getName()).append(";")
@@ -49,7 +49,7 @@ class ReportEngineTest {
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         DateTimeFormatter date = new SimpleDataTimeFormatter();
-        Report engine = new ReportForIT(store, date);
+        ReportForIT engine = new ReportForIT(store, date);
         StringBuilder expect = new StringBuilder()
                 .append(HTML_TEXT_START)
                 .append(worker.getName()).append(";")
@@ -68,7 +68,7 @@ class ReportEngineTest {
         store.add(worker);
         DateTimeFormatter date = new SimpleDataTimeFormatter();
         CurrencyConverter converter = new InMemoryCurrencyConverter();
-        Report engine = new ReportForAccounting(store, date, converter);
+        ReportForAccounting engine = new ReportForAccounting(store, date, converter);
         StringBuilder expect = new StringBuilder()
                 .append(HEAD_TEXT)
                 .append(worker.getName()).append(";")
@@ -89,7 +89,7 @@ class ReportEngineTest {
         store.add(worker2);
         store.add(worker3);
         Comparator<Employee> comparator = (o1, o2) -> (int) (o1.getSalary() - o2.getSalary());
-        Report engine = new ReportForHR(store, comparator);
+        ReportForHR engine = new ReportForHR(store, comparator);
         StringBuilder expect = new StringBuilder()
                 .append(HEAD_TEXT)
                 .append(worker2.getName()).append(";")
@@ -98,6 +98,23 @@ class ReportEngineTest {
                 .append(worker1.getSalary()).append(";").append(SEPARATOR)
                 .append(worker3.getName()).append(";")
                 .append(worker3.getSalary()).append(";").append(SEPARATOR);
+        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
+    }
+
+    @Test
+    public void whenReportToJson() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        DateTimeFormatter date = new SimpleDataTimeFormatter();
+        ReportToJson engine = new ReportToJson(store, date);
+        StringBuilder expect = new StringBuilder()
+                .append("\"Name; Hired; Fired; Salary;\\r\\n")
+                .append(worker.getName()).append(";")
+                .append(date.format(worker.getHired().getTime())).append(";")
+                .append(date.format(worker.getFired().getTime())).append(";")
+                .append(worker.getSalary()).append(";").append("\\r\\n\"");
         assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 }
