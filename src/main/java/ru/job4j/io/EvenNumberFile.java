@@ -15,9 +15,9 @@ public class EvenNumberFile {
             String[] lines = text.toString().split(System.lineSeparator());
             for (String line : lines) {
                 if (Integer.parseInt(line) % 2 == 0) {
-                    System.out.println("Число " + line + " - чётное");
+                    System.out.println("Р§РёСЃР»Рѕ " + line + " - С‡С‘С‚РЅРѕРµ");
                 } else {
-                    System.out.println("Число " + line + " - нечётное");
+                    System.out.println("Р§РёСЃР»Рѕ " + line + " - РЅРµС‡С‘С‚РЅРѕРµ");
                 }
             }
         } catch (IOException e) {

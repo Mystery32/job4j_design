@@ -10,7 +10,11 @@ public class SimpleMenuPrinter implements MenuPrinter {
             String name = item.getName();
             String number = item.getNumber();
             StringBuilder text = new StringBuilder();
-            text.append(STROKES.repeat(number.length())).append(name).append(" ").append(number);
+            if (number.length() == 2) {
+                text.append(name).append(" ").append(number);
+            } else {
+                text.append(STROKES.repeat(number.length())).append(name).append(" ").append(number);
+            }
             System.out.println(text);
         }
     }

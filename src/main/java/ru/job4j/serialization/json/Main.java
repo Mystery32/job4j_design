@@ -10,15 +10,15 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        JSONObject jsonFavoriteLesson = new JSONObject("{\"name\":\"Физика\",\"grade\":\"92\"}");
+        JSONObject jsonFavoriteLesson = new JSONObject("{\"name\":\"Р¤РёР·РёРєР°\",\"grade\":\"92\"}");
 
         List<String> list = new ArrayList<>();
-        list.add("Шахматы");
-        list.add("Бильярд");
+        list.add("РЁР°С…РјР°С‚С‹");
+        list.add("Р‘РёР»СЊСЏСЂРґ");
         JSONArray jsonSections = new JSONArray(list);
 
-        final Student student = new Student(false, 19, "Иван",
-                new FavoriteLesson("Математика", 87), new String[]{"Бокс", "Туризм"});
+        final Student student = new Student(false, 19, "РРІР°РЅ",
+                new FavoriteLesson("РњР°С‚РµРјР°С‚РёРєР°", 87), new String[]{"Р‘РѕРєСЃ", "РўСѓСЂРёР·Рј"});
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("expelled", student.isExpelled());

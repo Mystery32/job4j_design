@@ -9,14 +9,15 @@ public class SimpleMenu implements Menu {
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         boolean result = false;
+        Optional<ItemInfo> parentItem = findItem(parentName);
         if (findItem(childName).isPresent()) {
             return false;
         }
         if (Objects.equals(parentName, ROOT)) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
             result = true;
-        } else if (findItem(parentName).isPresent()) {
-            findItem(parentName).get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
+        } else if (parentItem.isPresent()) {
+            parentItem.get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
             result = true;
         }
         return result;
@@ -24,8 +25,7 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        return findItem(itemName).map(i -> new MenuItemInfo(findItem(itemName).get().menuItem,
-                findItem(itemName).get().number));
+        return findItem(itemName).map(i -> new MenuItemInfo(i.menuItem, i.number));
     }
 
     @Override
@@ -39,7 +39,8 @@ public class SimpleMenu implements Menu {
 
             @Override
             public MenuItemInfo next() {
-                return new MenuItemInfo(dfsIterator.next().menuItem, dfsIterator.next().number);
+                ItemInfo itemInfo = dfsIterator.next();
+                return new MenuItemInfo(itemInfo.menuItem, itemInfo.number);
             }
         };
     }
@@ -50,7 +51,7 @@ public class SimpleMenu implements Menu {
         ItemInfo item;
         while (iterator.hasNext()) {
             item = iterator.next();
-            if (name.equals(item.menuItem.getName())) {
+            if (Objects.equals(name, item.menuItem.getName())) {
                 result = Optional.of(item);
                 break;
             }
@@ -60,9 +61,9 @@ public class SimpleMenu implements Menu {
 
     private static class SimpleMenuItem implements MenuItem {
 
-        private String name;
-        private List<MenuItem> children = new ArrayList<>();
-        private ActionDelegate actionDelegate;
+        private final String name;
+        private final List<MenuItem> children = new ArrayList<>();
+        private final ActionDelegate actionDelegate;
 
         public SimpleMenuItem(String name, ActionDelegate actionDelegate) {
             this.name = name;

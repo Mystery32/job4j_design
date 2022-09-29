@@ -3,6 +3,8 @@ package ru.job4j.ood.isp.menu;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -11,36 +13,53 @@ import static org.assertj.core.api.Assertions.*;
 class SimpleMenuTest {
 
     public static final ActionDelegate STUB_ACTION = System.out::println;
+    public static final String SEPARATOR = System.lineSeparator();
 
     @Test
     public void whenAddThenReturnSame() {
         Menu menu = new SimpleMenu();
-        menu.add(Menu.ROOT, "—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ", STUB_ACTION);
-        menu.add(Menu.ROOT, "œÓÍÓÏËÚ¸ ÒÓ·‡ÍÛ", STUB_ACTION);
-        menu.add("—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ", " ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚", STUB_ACTION);
-        menu.add(" ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚", " ÛÔËÚ¸ ıÎÂ·", STUB_ACTION);
-        menu.add(" ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚", " ÛÔËÚ¸ ÏÓÎÓÍÓ", STUB_ACTION);
-        assertThat(new Menu.MenuItemInfo("—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ",
-                List.of(" ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚"), STUB_ACTION, "1."))
-                .isEqualTo(menu.select("—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ").get());
+        menu.add(Menu.ROOT, "–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω", STUB_ACTION);
+        menu.add(Menu.ROOT, "–ü–æ–∫–æ—Ä–º–∏—Ç—å —Å–æ–±–∞–∫—É", STUB_ACTION);
+        menu.add("–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω", "–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", STUB_ACTION);
+        menu.add("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", "–ö—É–ø–∏—Ç—å —Ö–ª–µ–±", STUB_ACTION);
+        menu.add("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", "–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ", STUB_ACTION);
+        assertThat(new Menu.MenuItemInfo("–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω",
+                List.of("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã"), STUB_ACTION, "1."))
+                .isEqualTo(menu.select("–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω").get());
         assertThat(new Menu.MenuItemInfo(
-                " ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚",
-                List.of(" ÛÔËÚ¸ ıÎÂ·", " ÛÔËÚ¸ ÏÓÎÓÍÓ"), STUB_ACTION, "1.1."))
-                .isEqualTo(menu.select(" ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚").get());
+                "–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã",
+                List.of("–ö—É–ø–∏—Ç—å —Ö–ª–µ–±", "–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ"), STUB_ACTION, "1.1."))
+                .isEqualTo(menu.select("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã").get());
         assertThat(new Menu.MenuItemInfo(
-                "œÓÍÓÏËÚ¸ ÒÓ·‡ÍÛ", List.of(), STUB_ACTION, "2."))
-                .isEqualTo(menu.select("œÓÍÓÏËÚ¸ ÒÓ·‡ÍÛ").get());
+                "–ü–æ–∫–æ—Ä–º–∏—Ç—å —Å–æ–±–∞–∫—É", List.of(), STUB_ACTION, "2."))
+                .isEqualTo(menu.select("–ü–æ–∫–æ—Ä–º–∏—Ç—å —Å–æ–±–∞–∫—É").get());
         menu.forEach(i -> System.out.println(i.getNumber() + i.getName()));
     }
 
     @Test
     public void whenSelectMenuItem() {
         Menu menu = new SimpleMenu();
-        menu.add(Menu.ROOT, "—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ", STUB_ACTION);
-        menu.add("—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ", " ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚", STUB_ACTION);
-        assertThat(new Menu.MenuItemInfo("—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ",
-                List.of(" ÛÔËÚ¸ ÔÓ‰ÛÍÚ˚"), STUB_ACTION, "1."))
-                .isEqualTo(menu.select("—ıÓ‰ËÚ¸ ‚ Ï‡„‡ÁËÌ").get());
-        menu.forEach(i -> System.out.println(i.getNumber() + i.getName()));
+        menu.add(Menu.ROOT, "–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω", STUB_ACTION);
+        menu.add("–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω", "–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", STUB_ACTION);
+        menu.add("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", "–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ", STUB_ACTION);
+        assertThat(new Menu.MenuItemInfo("–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ", List.of(), STUB_ACTION, "1.1.1."))
+                .isEqualTo(menu.select("–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ").get());
+    }
+
+    @Test
+    public void whenPrintMenu() {
+        Menu menu = new SimpleMenu();
+        menu.add(Menu.ROOT, "–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω", STUB_ACTION);
+        menu.add(Menu.ROOT, "–ü–æ–∫–æ—Ä–º–∏—Ç—å —Å–æ–±–∞–∫—É", STUB_ACTION);
+        menu.add("–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω", "–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", STUB_ACTION);
+        menu.add("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", "–ö—É–ø–∏—Ç—å —Ö–ª–µ–±", STUB_ACTION);
+        menu.add("–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã", "–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ", STUB_ACTION);
+        String expected = "–°—Ö–æ–¥–∏—Ç—å –≤ –º–∞–≥–∞–∑–∏–Ω 1." + SEPARATOR + "----–ö—É–ø–∏—Ç—å –ø—Ä–æ–¥—É–∫—Ç—ã 1.1."
+        + SEPARATOR + "------–ö—É–ø–∏—Ç—å —Ö–ª–µ–± 1.1.1." + SEPARATOR + "------–ö—É–ø–∏—Ç—å –º–æ–ª–æ–∫–æ 1.1.2."
+                + SEPARATOR + "–ü–æ–∫–æ—Ä–º–∏—Ç—å —Å–æ–±–∞–∫—É 2." + SEPARATOR;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        new SimpleMenuPrinter().print(menu);
+        assertThat(out.toString()).isEqualTo(expected);
     }
 }
