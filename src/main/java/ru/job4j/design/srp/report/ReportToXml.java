@@ -1,62 +1,55 @@
 package ru.job4j.design.srp.report;
 
 import ru.job4j.design.srp.Employee;
-import ru.job4j.design.srp.formatter.DateTimeFormatter;
-import ru.job4j.design.srp.formatter.SimpleDataTimeFormatter;
-import ru.job4j.design.srp.store.MemStore;
 import ru.job4j.design.srp.store.Store;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Calendar;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class ReportToXml implements Report {
 
-    public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
     private Store store;
-    private DateTimeFormatter date;
+    private JAXBContext context;
+    private Marshaller marshaller;
 
-    public ReportToXml(Store store, DateTimeFormatter date) {
+    public ReportToXml(Store store, JAXBContext context, Marshaller marshaller) {
         this.store = store;
-        this.date = date;
+        this.context = context;
+        this.marshaller = marshaller;
+    }
+
+    @XmlRootElement
+    public static class Employees {
+        @XmlElement(name = "employee")
+
+        private List<Employee> employees;
+
+        public Employees() { }
+
+        public Employees(List<Employee> employees) {
+            this.employees = employees;
+        }
     }
 
     @Override
     public String generate(Predicate<Employee> filter) throws JAXBException {
-        StringBuilder text = new StringBuilder();
-        text.append(HEAD_TEXT);
-        for (Employee emp : store.findBy(filter)) {
-            text.append(emp.getName()).append(";")
-                    .append(date.format(emp.getHired().getTime())).append(";")
-                    .append(date.format(emp.getFired().getTime())).append(";")
-                    .append(emp.getSalary()).append(";")
-                    .append(SEPARATOR);
-        }
-        JAXBContext context = JAXBContext.newInstance(Employee.class);
-        Marshaller marshaller = context.createMarshaller();
+        var employees = store.findBy(filter);
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(text, writer);
+            marshaller.marshal(new Employees(employees), writer);
             xml = writer.getBuffer().toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return xml;
-    }
-
-    public static void main(String[] args) throws JAXBException {
-        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        store.add(worker);
-        DateTimeFormatter date = new SimpleDataTimeFormatter();
-        ReportToXml engine = new ReportToXml(store, date);
-        System.out.println(engine.generate(em -> true));
     }
 }
 

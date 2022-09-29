@@ -1,6 +1,7 @@
 package ru.job4j.design.srp;
 
-import org.junit.jupiter.api.Disabled;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Test;
 import ru.job4j.design.srp.currency.Currency;
 import ru.job4j.design.srp.currency.CurrencyConverter;
@@ -10,13 +11,16 @@ import ru.job4j.design.srp.formatter.SimpleDataTimeFormatter;
 import ru.job4j.design.srp.report.*;
 import ru.job4j.design.srp.store.MemStore;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.*;
 import static ru.job4j.design.srp.report.ReportEngine.DATE_FORMAT;
 
-@Disabled
 class ReportEngineTest {
 
     public static final String SEPARATOR = System.lineSeparator();
@@ -109,14 +113,65 @@ class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        DateTimeFormatter date = new SimpleDataTimeFormatter();
-        ReportToJson engine = new ReportToJson(store, date);
-        StringBuilder expect = new StringBuilder()
-                .append("\"Name; Hired; Fired; Salary;\\r\\n")
-                .append(worker.getName()).append(";")
-                .append(date.format(worker.getHired().getTime())).append(";")
-                .append(date.format(worker.getFired().getTime())).append(";")
-                .append(worker.getSalary()).append(";").append("\\r\\n\"");
-        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        ReportToJson engine = new ReportToJson(store, gson);
+        String template = """
+                [
+                  {
+                    "name": "%1$s",
+                    "hired": {
+                      "year": %2$s,
+                      "month": %3$s,
+                      "dayOfMonth": %4$s,
+                      "hourOfDay": %5$s,
+                      "minute": %6$s,
+                      "second": %7$s
+                    },
+                    "fired": {
+                      "year": %2$s,
+                      "month": %3$s,
+                      "dayOfMonth": %4$s,
+                      "hourOfDay": %5$s,
+                      "minute": %6$s,
+                      "second": %7$s
+                    },
+                    "salary": %8$s
+                  }
+                ]""".formatted(worker.getName(),
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH),
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND),
+                worker.getSalary());
+        assertThat(engine.generate(em -> true)).isEqualTo(template);
+    }
+
+    @Test
+    public void whenReportToXml() throws JAXBException {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        OffsetDateTime date = OffsetDateTime.ofInstant(now.toInstant(), now.getTimeZone().toZoneId());
+        JAXBContext context = JAXBContext.newInstance(ReportToXml.Employees.class);
+        Marshaller marshaller = context.createMarshaller();
+        ReportToXml engine = new ReportToXml(store, context, marshaller);
+        String template = """
+                <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <employees>
+                    <employee>
+                        <name>%s</name>
+                        <hired>%s</hired>
+                        <fired>%s</fired>
+                        <salary>%s</salary>
+                    </employee>
+                </employees>
+                """.formatted(worker.getName(),
+                date,
+                date,
+                worker.getSalary());
+        assertThat(engine.generate(em -> true)).isEqualTo(template);
     }
 }
