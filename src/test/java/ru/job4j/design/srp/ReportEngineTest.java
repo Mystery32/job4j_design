@@ -1,7 +1,5 @@
 package ru.job4j.design.srp;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Test;
 import ru.job4j.design.srp.currency.Currency;
 import ru.job4j.design.srp.currency.CurrencyConverter;
@@ -11,9 +9,7 @@ import ru.job4j.design.srp.formatter.SimpleDataTimeFormatter;
 import ru.job4j.design.srp.report.*;
 import ru.job4j.design.srp.store.MemStore;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -113,8 +109,7 @@ class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        ReportToJson engine = new ReportToJson(store, gson);
+        ReportToJson engine = new ReportToJson(store);
         String template = """
                 [
                   {
@@ -155,9 +150,7 @@ class ReportEngineTest {
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         OffsetDateTime date = OffsetDateTime.ofInstant(now.toInstant(), now.getTimeZone().toZoneId());
-        JAXBContext context = JAXBContext.newInstance(ReportToXml.Employees.class);
-        Marshaller marshaller = context.createMarshaller();
-        ReportToXml engine = new ReportToXml(store, context, marshaller);
+        ReportToXml engine = new ReportToXml(store);
         String template = """
                 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
                 <employees>

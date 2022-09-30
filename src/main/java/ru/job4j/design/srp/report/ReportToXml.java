@@ -19,10 +19,10 @@ public class ReportToXml implements Report {
     private JAXBContext context;
     private Marshaller marshaller;
 
-    public ReportToXml(Store store, JAXBContext context, Marshaller marshaller) {
+    public ReportToXml(Store store) throws JAXBException {
         this.store = store;
-        this.context = context;
-        this.marshaller = marshaller;
+        context = JAXBContext.newInstance(ReportToXml.Employees.class);
+        marshaller = context.createMarshaller();
     }
 
     @XmlRootElement
