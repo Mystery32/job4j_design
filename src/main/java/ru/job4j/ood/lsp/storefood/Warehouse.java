@@ -6,7 +6,7 @@ import java.util.List;
 public class Warehouse implements Store {
 
     private static final int PERCENT_25 = 25;
-    private List<Food> foodsInWarehouse = new ArrayList<>();
+    private final List<Food> foodsInWarehouse = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {
@@ -26,5 +26,10 @@ public class Warehouse implements Store {
     @Override
     public boolean canPutInStore(Food food) {
         return percent(food) < PERCENT_25;
+    }
+
+    @Override
+    public void clearStore() {
+        foodsInWarehouse.clear();
     }
 }

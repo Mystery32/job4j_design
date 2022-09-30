@@ -20,4 +20,6 @@ public interface Store {
     }
 
     boolean canPutInStore(Food food);
+
+    void clearStore();
 }

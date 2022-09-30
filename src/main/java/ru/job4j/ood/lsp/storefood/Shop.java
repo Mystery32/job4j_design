@@ -33,6 +33,11 @@ public class Shop implements Store {
         return (percent(food) >= PERCENT_25 && percent(food) < PERCENT_100);
     }
 
+    @Override
+    public void clearStore() {
+        foodsInShop.clear();
+    }
+
     public boolean checkDiscount(Food food) {
         return (percent(food) >= PERCENT_75 && percent(food) < PERCENT_100);
     }

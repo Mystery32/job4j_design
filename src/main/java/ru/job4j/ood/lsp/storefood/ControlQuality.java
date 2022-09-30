@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ControlQuality {
 
-    private List<Store> stores;
+    private final List<Store> stores;
 
     public ControlQuality(List<Store> stores) {
         this.stores = stores;
@@ -23,7 +23,7 @@ public class ControlQuality {
         List<Food> foods = new ArrayList<>();
         for (Store s: stores) {
             foods.addAll(s.getFoods());
-            s.getFoods().clear();
+            s.clearStore();
         }
         for (Food f: foods) {
             addToStore(f);

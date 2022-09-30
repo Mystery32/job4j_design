@@ -27,4 +27,9 @@ public class Trash implements Store {
     public boolean canPutInStore(Food food) {
         return percent(food) == PERCENT_100;
     }
+
+    @Override
+    public void clearStore() {
+        foodsInTrash.clear();
+    }
 }
