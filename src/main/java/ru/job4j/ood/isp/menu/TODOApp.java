@@ -18,11 +18,11 @@ public class TODOApp {
     public static final String SELECT = "Выберите пункт меню.";
     public static final String MAIN_TASK_MESSAGE = "Введите наименование основной задачи";
     public static final String SUB_TASK_MESSAGE = "Введите наименование подзадачи";
-    private final Menu menu = new SimpleMenu();
-    private final Scanner scanner = new Scanner(System.in);
-    private final MenuPrinter printer = new SimpleMenuPrinter();
 
     private void startMenu() {
+        Menu menu = new SimpleMenu();
+        Scanner scanner = new Scanner(System.in);
+        MenuPrinter printer = new SimpleMenuPrinter();
         boolean run = true;
         while (run) {
             System.out.println(MENU_MESSAGE);

@@ -55,7 +55,7 @@ class SimpleMenuTest {
         menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
         menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
         String expected = "Сходить в магазин 1." + SEPARATOR + "----Купить продукты 1.1."
-        + SEPARATOR + "------Купить хлеб 1.1.1." + SEPARATOR + "------Купить молоко 1.1.2."
+        + SEPARATOR + "--------Купить хлеб 1.1.1." + SEPARATOR + "--------Купить молоко 1.1.2."
                 + SEPARATOR + "Покормить собаку 2." + SEPARATOR;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
