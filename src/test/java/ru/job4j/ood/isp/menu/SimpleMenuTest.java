@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
 class SimpleMenuTest {
 
     public static final ActionDelegate STUB_ACTION = System.out::println;
-    
+
     @Test
     public void whenAddThenReturnSame() {
         Menu menu = new SimpleMenu();
