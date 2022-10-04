@@ -1,19 +1,19 @@
-package ru.job4j.design.srp.report;
+package ru.job4j.ood.srp.report;
 
-import ru.job4j.design.srp.Employee;
-import ru.job4j.design.srp.currency.Currency;
-import ru.job4j.design.srp.store.Store;
-import ru.job4j.design.srp.currency.CurrencyConverter;
-import ru.job4j.design.srp.formatter.DateTimeFormatter;
+import ru.job4j.ood.srp.Employee;
+import ru.job4j.ood.srp.currency.Currency;
+import ru.job4j.ood.srp.store.Store;
+import ru.job4j.ood.srp.currency.CurrencyConverter;
+import ru.job4j.ood.srp.formatter.DateTimeFormatter;
 
 import java.util.function.Predicate;
 
 public class ReportForAccounting implements Report {
 
     public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
-    private Store store;
-    private DateTimeFormatter date;
-    private CurrencyConverter converter;
+    private final Store store;
+    private final DateTimeFormatter date;
+    private final CurrencyConverter converter;
 
     public ReportForAccounting(Store store, DateTimeFormatter date, CurrencyConverter converter) {
         this.store = store;

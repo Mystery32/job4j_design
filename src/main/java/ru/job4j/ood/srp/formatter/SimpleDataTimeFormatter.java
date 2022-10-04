@@ -1,4 +1,4 @@
-package ru.job4j.design.srp.formatter;
+package ru.job4j.ood.srp.formatter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

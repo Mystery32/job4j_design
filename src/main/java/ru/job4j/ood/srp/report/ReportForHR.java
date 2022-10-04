@@ -1,7 +1,7 @@
-package ru.job4j.design.srp.report;
+package ru.job4j.ood.srp.report;
 
-import ru.job4j.design.srp.Employee;
-import ru.job4j.design.srp.store.Store;
+import ru.job4j.ood.srp.Employee;
+import ru.job4j.ood.srp.store.Store;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.function.Predicate;
 public class ReportForHR implements Report {
 
     public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
-    private Comparator<Employee> comparator;
-    private Store store;
+    private final Comparator<Employee> comparator;
+    private final Store store;
 
     public ReportForHR(Store store, Comparator<Employee> comparator) {
         this.store = store;

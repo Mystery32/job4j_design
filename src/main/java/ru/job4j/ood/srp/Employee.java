@@ -1,4 +1,4 @@
-package ru.job4j.design.srp;
+package ru.job4j.ood.srp;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

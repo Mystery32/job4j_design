@@ -1,13 +1,13 @@
-package ru.job4j.design.srp;
+package ru.job4j.ood.srp;
 
 import org.junit.jupiter.api.Test;
-import ru.job4j.design.srp.currency.Currency;
-import ru.job4j.design.srp.currency.CurrencyConverter;
-import ru.job4j.design.srp.currency.InMemoryCurrencyConverter;
-import ru.job4j.design.srp.formatter.DateTimeFormatter;
-import ru.job4j.design.srp.formatter.SimpleDataTimeFormatter;
-import ru.job4j.design.srp.report.*;
-import ru.job4j.design.srp.store.MemStore;
+import ru.job4j.ood.srp.currency.Currency;
+import ru.job4j.ood.srp.currency.CurrencyConverter;
+import ru.job4j.ood.srp.currency.InMemoryCurrencyConverter;
+import ru.job4j.ood.srp.formatter.DateTimeFormatter;
+import ru.job4j.ood.srp.formatter.SimpleDataTimeFormatter;
+import ru.job4j.ood.srp.store.MemStore;
+import ru.job4j.ood.srp.report.*;
 
 import javax.xml.bind.JAXBException;
 import java.time.OffsetDateTime;
@@ -15,17 +15,25 @@ import java.util.Calendar;
 import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.*;
-import static ru.job4j.design.srp.report.ReportEngine.DATE_FORMAT;
+import static ru.job4j.ood.srp.report.ReportEngine.DATE_FORMAT;
 
 class ReportEngineTest {
 
     public static final String SEPARATOR = System.lineSeparator();
     public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
-    public static final String HTML_TEXT_START = "<!DOCTYPE html>" + SEPARATOR + "<html lang=\"en\">" + SEPARATOR
-            + "<head>" + SEPARATOR + "<meta charset=\"UTF-8\">" + SEPARATOR + "<title>Report</title>"
-            + SEPARATOR + "</head>" + SEPARATOR + "<body>" + SEPARATOR + "Name; Hired; Fired; Salary;"
-            + SEPARATOR;
-    public static final String HTML_TEXT_END = "</body>" + SEPARATOR + "</html>";
+    public static final String HTML_TEXT = """
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Report</title>
+                </head>
+                <body>
+                    Name; Hired; Fired; Salary;
+                    %s
+                </body>
+            </html>
+            """;
 
     @Test
     public void whenOldGenerated() {
@@ -53,13 +61,11 @@ class ReportEngineTest {
         DateTimeFormatter date = new SimpleDataTimeFormatter();
         ReportForIT engine = new ReportForIT(store, date);
         StringBuilder expect = new StringBuilder()
-                .append(HTML_TEXT_START)
                 .append(worker.getName()).append(";")
                 .append(date.format(worker.getHired().getTime())).append(";")
                 .append(date.format(worker.getFired().getTime())).append(";")
-                .append(worker.getSalary()).append(";").append(SEPARATOR)
-                .append(HTML_TEXT_END);
-        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
+                .append(worker.getSalary()).append(";");
+        assertThat(engine.generate(em -> true)).isEqualTo(String.format(HTML_TEXT, expect));
     }
 
     @Test
