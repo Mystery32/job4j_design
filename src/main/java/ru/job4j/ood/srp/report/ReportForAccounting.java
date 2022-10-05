@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 
 public class ReportForAccounting implements Report {
 
-    public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
+    private static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
     private final Store store;
     private final DateTimeFormatter date;
     private final CurrencyConverter converter;

@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 public class ReportEngine implements Report {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
-    public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
+    private static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
 
     private final Store store;
 

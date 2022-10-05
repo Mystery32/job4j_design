@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 public class ReportForHR implements Report {
 
-    public static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
+    private static final String HEAD_TEXT = "Name; Hired; Fired; Salary;" + SEPARATOR;
     private final Comparator<Employee> comparator;
     private final Store store;
 

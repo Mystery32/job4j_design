@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public class ReportForIT implements Report {
 
-    public static final String HTML_TEXT = """
+    private static final String HTML_TEXT = """
             <!DOCTYPE html>
             <html lang="en">
                 <head>

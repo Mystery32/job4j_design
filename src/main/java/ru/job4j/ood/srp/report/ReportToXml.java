@@ -6,7 +6,6 @@ import ru.job4j.ood.srp.store.Store;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.StringWriter;
@@ -31,7 +30,8 @@ public class ReportToXml implements Report {
 
         private List<Employee> employees;
 
-        public Employees() { }
+        public Employees() {
+        }
 
         public Employees(List<Employee> employees) {
             this.employees = employees;
@@ -42,15 +42,11 @@ public class ReportToXml implements Report {
     public String generate(Predicate<Employee> filter) {
         var employees = store.findBy(filter);
         String xml;
-        try {
+        try (StringWriter writer = new StringWriter()) {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            try (StringWriter writer = new StringWriter()) {
-                marshaller.marshal(new Employees(employees), writer);
-                xml = writer.getBuffer().toString();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } catch (PropertyException e) {
+            marshaller.marshal(new Employees(employees), writer);
+            xml = writer.getBuffer().toString();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return xml;
